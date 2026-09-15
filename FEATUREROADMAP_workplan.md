@@ -165,7 +165,7 @@ of chess, cheese-themed, at a public URL — before the computer opponent or onl
   Files: `public/sounds.js`, squeak audio assets.
   Done when: moves and captures trigger an appropriate squeak, in every mode.
 
-- [ ] **4.2 — Background cafe chatter + low hum**
+- [x] **4.2 — Background cafe chatter + low hum**
   Depends on: 4.1.
   Files: `public/sounds.js`, ambience audio asset.
   Done when: a looping background ambience plays during a game without cutting out or

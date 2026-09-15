@@ -9,7 +9,7 @@ import {
   rankOf,
 } from './rules.js';
 import { chooseMove } from './ai.js';
-import { playMoveSqueak, playCaptureSqueak } from './sounds.js';
+import { playMoveSqueak, playCaptureSqueak, startAmbience } from './sounds.js';
 
 const AI_SEARCH_DEPTH = 2;
 const AI_THINK_DELAY_MS = 400;
@@ -266,6 +266,7 @@ function startGame(newMode) {
   awaitingComputer = false;
   state = createInitialState();
   clearSelection();
+  startAmbience();
 }
 
 document.getElementById('mode-hotseat').addEventListener('click', () => startGame('hotseat'));

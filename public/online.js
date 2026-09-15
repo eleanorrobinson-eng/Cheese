@@ -11,7 +11,7 @@ import {
   fileOf,
   rankOf,
 } from './rules.js';
-import { playMoveSqueak, playCaptureSqueak } from './sounds.js';
+import { playMoveSqueak, playCaptureSqueak, startAmbience } from './sounds.js';
 
 const PIECE_GLYPHS = {
   w: { k: '♔', q: '♕', r: '♖', b: '♗', n: '♘', p: '♙' },
@@ -214,6 +214,7 @@ function joinRoom(code) {
   showOnlineScreen();
   setRoomInfo(`Connecting to room ${code}…`);
   history.replaceState(null, '', `?room=${encodeURIComponent(code)}`);
+  startAmbience();
 
   socket = new WebSocket(wsUrl(code));
 
