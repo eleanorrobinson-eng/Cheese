@@ -1,5 +1,5 @@
 import { DurableObject } from 'cloudflare:workers';
-import { createInitialState } from '../public/rules.js';
+import { createInitialState, getAllLegalMoves, applyMove } from '../public/rules.js';
 
 // One Room per online game, addressed by room code via env.ROOM.getByName(code).
 // State lives in this Durable Object's own SQLite storage, so it survives
@@ -28,6 +28,17 @@ export class Room extends DurableObject {
   getState() {
     const row = [...this.sql.exec(`SELECT state FROM room WHERE id = 0`)][0];
     return JSON.parse(row.state);
+  }
+
+  saveState(state) {
+    this.sql.exec(`UPDATE room SET state = ? WHERE id = 0`, JSON.stringify(state));
+  }
+
+  broadcast(message) {
+    const json = JSON.stringify(message);
+    for (const ws of this.ctx.getWebSockets()) {
+      ws.send(json);
+    }
   }
 
   // First connection to claim a color becomes that color; once both are
@@ -75,7 +86,44 @@ export class Room extends DurableObject {
   }
 
   async webSocketMessage(ws, message) {
-    // Move handling arrives in a later task.
+    let data;
+    try {
+      data = JSON.parse(message);
+    } catch {
+      return;
+    }
+    if (data.type !== 'move') return;
+
+    const attachment = ws.deserializeAttachment();
+    const color = attachment?.color;
+    if (color !== 'w' && color !== 'b') {
+      ws.send(JSON.stringify({ type: 'error', payload: { message: 'Spectators cannot move.' } }));
+      return;
+    }
+
+    const state = this.getState();
+    if (state.turn !== color) {
+      ws.send(JSON.stringify({ type: 'error', payload: { message: 'Not your turn.' } }));
+      return;
+    }
+
+    // Never trust the client's description of the move beyond from/to/promotion —
+    // the server independently recomputes every legal move for the current
+    // position and only accepts an exact match.
+    const { from, to, promotion } = data.payload || {};
+    const legalMoves = getAllLegalMoves(state);
+    const move = legalMoves.find(
+      (m) => m.from === from && m.to === to && (m.promotion ?? null) === (promotion ?? null)
+    );
+
+    if (!move) {
+      ws.send(JSON.stringify({ type: 'error', payload: { message: 'Illegal move.' } }));
+      return;
+    }
+
+    const nextState = applyMove(state, move);
+    this.saveState(nextState);
+    this.broadcast({ type: 'state', payload: { state: nextState, lastMove: move } });
   }
 
   async webSocketClose(ws, code, reason, wasClean) {

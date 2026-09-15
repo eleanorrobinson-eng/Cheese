@@ -130,7 +130,7 @@ of chess, cheese-themed, at a public URL — before the computer opponent or onl
   `ws.serializeAttachment()` means the first browser to join a room is White, the second is
   Black, and a third is a spectator — verified with three tabs on the same room code.
 
-- [ ] **3.3 — Server-side move validation**
+- [x] **3.3 — Server-side move validation**
   Depends on: 3.2, 0.4 (`rules.js`, reused unchanged on the server).
   Files: `src/room.js`.
   Done when: the server rechecks every incoming move against `rules.js` and rejects (without
