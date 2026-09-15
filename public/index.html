@@ -47,7 +47,7 @@
       <div class="mode-buttons">
         <button id="mode-hotseat" class="mode-btn">Hot-seat</button>
         <button id="mode-vscomputer" class="mode-btn">Vs Computer</button>
-        <button class="mode-btn" disabled title="Coming soon">Online</button>
+        <button id="mode-online" class="mode-btn">Online</button>
       </div>
     </main>
   </div>
@@ -82,6 +82,23 @@
     </div>
   </div>
 
+  <div id="online-screen" class="screen" hidden>
+    <div class="online-status-panel">
+      <p id="online-status-text">Connecting…</p>
+    </div>
+  </div>
+
+  <div id="online-join-dialog" class="modal-overlay" hidden>
+    <div class="modal-panel">
+      <p>Enter a room code to join:</p>
+      <input id="room-code-input" class="room-code-input" type="text" maxlength="6" autocomplete="off" />
+      <div>
+        <button id="room-join-btn" class="mode-btn">Join Room</button>
+      </div>
+    </div>
+  </div>
+
   <script type="module" src="/board.js"></script>
+  <script type="module" src="/online.js"></script>
 </body>
 </html>
