@@ -151,7 +151,7 @@ of chess, cheese-themed, at a public URL — before the computer opponent or onl
   timers involved — state is saved after every move, so there's nothing to lose), and
   clicking "New game" resets the board for both connected players at once.
 
-- [ ] **3.6 — Deploy online mode and test on two real devices**
+- [x] **3.6 — Deploy online mode and test on two real devices**
   Depends on: 3.1–3.5.
   Done when: two different physical devices, entering the same room code, play a full legal
   game live against each other on the public URL.
