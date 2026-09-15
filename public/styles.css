@@ -157,6 +157,33 @@ body {
   padding: 2rem;
 }
 
+.game-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.turn-indicator {
+  font-size: clamp(1.1rem, 3vw, 1.6rem);
+  font-weight: 700;
+  color: var(--square-light);
+  background: var(--wall-dark);
+  border: 3px solid var(--cheese-dark);
+  border-radius: 999px;
+  padding: 0.5rem 1.5rem;
+}
+
+.turn-indicator.turn-w {
+  background: var(--square-light);
+  color: var(--text);
+}
+
+.turn-indicator.turn-b {
+  background: var(--wall-dark);
+  color: var(--square-light);
+}
+
 .tablecloth {
   background: var(--pink);
   border-radius: 24px;
@@ -221,6 +248,37 @@ body {
 .square.in-check {
   box-shadow: inset 0 0 0 4px rgba(220, 20, 20, 0.85);
   background: radial-gradient(circle, rgba(220, 20, 20, 0.55), transparent 70%);
+}
+
+/* Pass-the-device handoff prompt */
+
+.handoff-banner {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 10;
+}
+
+.handoff-banner[hidden] {
+  display: none;
+}
+
+.handoff-panel {
+  background: var(--pink);
+  border: 6px solid var(--wall-dark);
+  border-radius: 1rem;
+  padding: 1.5rem 2rem;
+  text-align: center;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+}
+
+.handoff-panel p {
+  margin: 0 0 1rem;
+  font-size: 1.25rem;
+  font-weight: 700;
 }
 
 /* Game-over banner */
