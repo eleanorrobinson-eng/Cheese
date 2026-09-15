@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cheese</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --wall: #6b4226;
+      --wall-dark: #4a2c17;
+      --cheese: #f3c94f;
+      --cheese-dark: #d9a916;
+      --string-light: #ffe9a8;
+      --text: #3a2b1a;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(var(--wall), var(--wall-dark));
+      font-family: system-ui, sans-serif;
+      color: var(--text);
+      position: relative;
+      overflow: hidden;
+    }
+    .lights {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      font-size: 1.5rem;
+      letter-spacing: 3rem;
+      padding: 0.75rem 3rem;
+      text-align: center;
+      opacity: 0.9;
+    }
+    main {
+      text-align: center;
+      padding: 2rem 3rem;
+      background: var(--cheese);
+      border: 6px solid var(--cheese-dark);
+      border-radius: 1rem;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    }
+    h1 { font-size: 3rem; margin: 0 0 0.5rem; }
+    p { margin: 0.25rem 0; }
+    .critter { position: absolute; font-size: 1.75rem; opacity: 0.9; }
+  </style>
+</head>
+<body>
+  <div class="lights">💡 💡 💡 💡 💡</div>
+  <span class="critter" style="bottom: 2rem; left: 6%;">🐭</span>
+  <span class="critter" style="bottom: 3rem; right: 8%;">🐭</span>
+  <main>
+    <h1>🧀 Cheese Cafe</h1>
+    <p>Pull up a seat — the board is being set up.</p>
+    <p>Hot-seat, Vs Computer, and Online modes are coming soon.</p>
+  </main>
+</body>
+</html>

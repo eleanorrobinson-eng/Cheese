@@ -70,6 +70,10 @@ which resets the board for both.
 Every visual element is built around a cheese-and-mice theme (matching the Figma file
 `Cheese`, file key `avpp7smMt4MKCngLNf66zH`):
 
+- **Home screen:** the mode-selection screen (Hot-seat / Vs Computer / Online) is set in a
+  cheese cafe — warm, cozy cafe backdrop (counter, shelves, hanging lights, that kind of
+  feel) rather than a plain menu, so the cheese-and-mice theme starts before the board even
+  loads.
 - The board and all 32 pieces are rendered as if made of cheese — distinct cheese textures
   or colors per piece type is fine, as long as it's readable as chess at a glance.
 - The board sits on a table, with a pink tablecloth showing underneath and around it, so the

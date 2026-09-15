@@ -24,7 +24,7 @@ stands on.
   Files: `README.md`, `ProductSpec.md`, `FEATUREROADMAP_workplan.md`.
   Done when: all three are pushed to `main` (this task).
 
-- [ ] **0.3 — Cloudflare Workers project scaffold**
+- [x] **0.3 — Cloudflare Workers project scaffold**
   Depends on: 0.1.
   Files: `wrangler.jsonc`, `package.json`, `public/index.html` (placeholder page).
   Done when: `wrangler dev` serves the placeholder page locally, and `wrangler deploy`
