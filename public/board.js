@@ -1,14 +1,28 @@
-import { createInitialState, algebraic, getLegalMovesFrom, applyMove } from './rules.js';
+import { createInitialState, algebraic, getLegalMovesFrom, applyMove, getGameStatus } from './rules.js';
 
 const PIECE_GLYPHS = {
   w: { k: '♔', q: '♕', r: '♖', b: '♗', n: '♘', p: '♙' },
   b: { k: '♚', q: '♛', r: '♜', b: '♝', n: '♞', p: '♟' },
 };
 
+const COLOR_NAME = { w: 'White', b: 'Black' };
+
 let state = null;
 let selectedSquare = null;
 let legalMoves = [];
 let awaitingPromotion = false;
+let gameOver = false;
+
+const gameOverBanner = document.getElementById('game-over-banner');
+const gameOverText = document.getElementById('game-over-text');
+
+function findKingSquare(color) {
+  for (let sq = 0; sq < 64; sq++) {
+    const p = state.board[sq];
+    if (p && p.type === 'k' && p.color === color) return sq;
+  }
+  return -1;
+}
 
 const promotionDialog = document.getElementById('promotion-dialog');
 const promotionChoicesEl = promotionDialog.querySelector('.promotion-choices');
@@ -35,6 +49,11 @@ function render() {
   const container = document.getElementById('board');
   container.innerHTML = '';
 
+  const status = getGameStatus(state);
+  const checkedKingSquare = (status === 'check' || status === 'checkmate')
+    ? findKingSquare(state.turn)
+    : -1;
+
   for (let rank = 7; rank >= 0; rank--) {
     for (let file = 0; file < 8; file++) {
       const square = rank * 8 + file;
@@ -56,6 +75,10 @@ function render() {
         squareEl.classList.add('selected');
       }
 
+      if (square === checkedKingSquare) {
+        squareEl.classList.add('in-check');
+      }
+
       const move = legalMoves.find((m) => m.to === square);
       if (move) {
         squareEl.classList.add(move.capture ? 'legal-capture' : 'legal-move');
@@ -65,6 +88,22 @@ function render() {
       container.appendChild(squareEl);
     }
   }
+
+  if (status === 'checkmate') {
+    const winner = COLOR_NAME[state.turn === 'w' ? 'b' : 'w'];
+    showGameOver(`Checkmate — ${winner} wins!`);
+  } else if (status === 'stalemate') {
+    showGameOver('Stalemate — draw.');
+  } else {
+    gameOver = false;
+    gameOverBanner.hidden = true;
+  }
+}
+
+function showGameOver(message) {
+  gameOver = true;
+  gameOverText.textContent = message;
+  gameOverBanner.hidden = false;
 }
 
 function selectSquare(square) {
@@ -80,7 +119,7 @@ function clearSelection() {
 }
 
 async function handleSquareClick(square) {
-  if (awaitingPromotion) return;
+  if (awaitingPromotion || gameOver) return;
 
   const piece = state.board[square];
 
@@ -121,8 +160,10 @@ async function handleSquareClick(square) {
 function startHotSeat() {
   document.getElementById('home-screen').hidden = true;
   document.getElementById('game-screen').hidden = false;
+  gameOverBanner.hidden = true;
   state = createInitialState();
   clearSelection();
 }
 
 document.getElementById('mode-hotseat').addEventListener('click', startHotSeat);
+document.getElementById('play-again-btn').addEventListener('click', startHotSeat);

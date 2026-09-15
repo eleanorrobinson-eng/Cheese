@@ -66,7 +66,7 @@ of chess, cheese-themed, at a public URL — before the computer opponent or onl
   Done when: each of the three special moves is playable exactly when legal (and not
   offered when illegal), and promotion always asks which piece to become.
 
-- [ ] **1.4 — Check, checkmate, and stalemate**
+- [x] **1.4 — Check, checkmate, and stalemate**
   Depends on: 1.2.
   Files: `public/board.js`.
   Done when: a king in check is visibly marked, a checkmate ends the game with the correct
