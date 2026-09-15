@@ -72,7 +72,7 @@ of chess, cheese-themed, at a public URL — before the computer opponent or onl
   Done when: a king in check is visibly marked, a checkmate ends the game with the correct
   winner shown, and a stalemate ends the game and is shown as a draw.
 
-- [ ] **1.5 — Turn indicator and hot-seat "pass the device" prompt**
+- [x] **1.5 — Turn indicator and hot-seat "pass the device" prompt**
   Depends on: 1.2.
   Files: `public/board.js`, `public/styles.css`.
   Done when: it's always visually obvious whose turn it is, and the board prompts players
