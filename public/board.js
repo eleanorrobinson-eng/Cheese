@@ -1,4 +1,13 @@
-import { createInitialState, algebraic, getLegalMovesFrom, applyMove, getGameStatus } from './rules.js';
+import {
+  createInitialState,
+  algebraic,
+  getLegalMovesFrom,
+  applyMove,
+  getGameStatus,
+  squareIndex,
+  fileOf,
+  rankOf,
+} from './rules.js';
 
 const PIECE_GLYPHS = {
   w: { k: '♔', q: '♕', r: '♖', b: '♗', n: '♘', p: '♙' },
@@ -126,6 +135,27 @@ function dismissHandoff() {
   handoffBanner.hidden = true;
 }
 
+function playCaptureAnimation(square, piece) {
+  const squareEl = document.querySelector(`[data-square="${algebraic(square)}"]`);
+  if (!squareEl) return;
+
+  const fx = document.createElement('div');
+  fx.className = 'capture-fx';
+
+  const ghost = document.createElement('span');
+  ghost.className = `ghost-piece piece piece-${piece.color}`;
+  ghost.textContent = PIECE_GLYPHS[piece.color][piece.type];
+
+  const mouse = document.createElement('span');
+  mouse.className = 'mouse-eater';
+  mouse.textContent = '🐭';
+
+  fx.append(ghost, mouse);
+  squareEl.appendChild(fx);
+
+  setTimeout(() => fx.remove(), 650);
+}
+
 function selectSquare(square) {
   selectedSquare = square;
   legalMoves = getLegalMovesFrom(state, square);
@@ -164,9 +194,29 @@ async function handleSquareClick(square) {
       awaitingPromotion = false;
       move = candidates.find((m) => m.promotion === choice);
     }
+    let captureInfo = null;
+    if (move.capture) {
+      const capturedSquare = move.enPassantCapture
+        ? squareIndex(fileOf(move.to), rankOf(move.from))
+        : move.to;
+      captureInfo = { square: capturedSquare, piece: state.board[capturedSquare] };
+    }
+
     state = applyMove(state, move);
     clearSelection();
-    if (!gameOver) showHandoff(state.turn);
+    if (captureInfo) playCaptureAnimation(captureInfo.square, captureInfo.piece);
+
+    if (!gameOver) {
+      const nextTurn = state.turn;
+      if (captureInfo) {
+        // Block input right away, but delay revealing the handoff prompt so
+        // the capture animation is actually visible before the device is passed.
+        pendingHandoff = true;
+        setTimeout(() => showHandoff(nextTurn), 650);
+      } else {
+        showHandoff(nextTurn);
+      }
+    }
     return;
   }
 
