@@ -137,7 +137,7 @@ of chess, cheese-themed, at a public URL — before the computer opponent or onl
   changing state) any move that isn't legal for the room's current position and current
   player's color — including a deliberately-faked illegal move sent straight over the socket.
 
-- [ ] **3.4 — Live move sync between both players**
+- [x] **3.4 — Live move sync between both players**
   Depends on: 3.3.
   Files: `src/room.js`, `public/online.js`.
   Done when: a legal move made on one device appears on the other device's board with no
