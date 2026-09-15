@@ -123,7 +123,7 @@ of chess, cheese-themed, at a public URL — before the computer opponent or onl
   the first time, and reuses the same one every time after — verified by writing a value on
   one request and reading it back on the next.
 
-- [ ] **3.2 — WebSocket connections and player identity**
+- [x] **3.2 — WebSocket connections and player identity**
   Depends on: 3.1.
   Files: `src/room.js`, `public/online.js`.
   Done when: accepting a connection with `ctx.acceptWebSocket()` and storing color with
