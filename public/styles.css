@@ -405,15 +405,14 @@ body {
   margin-bottom: 1rem;
 }
 
-.online-status-panel {
-  background: var(--cheese);
-  border: 6px solid var(--cheese-dark);
-  border-radius: 1rem;
-  padding: 1.5rem 2rem;
-  text-align: center;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
-  font-size: 1.25rem;
-  font-weight: 700;
+.online-room-info {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--square-light);
+  background: var(--wall-dark);
+  border: 2px solid var(--cheese-dark);
+  border-radius: 999px;
+  padding: 0.35rem 1rem;
 }
 
 /* Promotion choice dialog */
