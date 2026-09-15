@@ -47,7 +47,7 @@ stands on.
 The whole point of this phase: two people can sit at one screen and play a full, legal game
 of chess, cheese-themed, at a public URL — before the computer opponent or online rooms exist.
 
-- [ ] **1.1 — Static board and pieces, matching Figma**
+- [x] **1.1 — Static board and pieces, matching Figma**
   Depends on: 0.3, 0.4.
   Files: `public/index.html`, `public/styles.css`, `public/board.js`.
   Done when: the start position renders with all 32 cheese-styled pieces, laid out to match

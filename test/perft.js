@@ -3,7 +3,7 @@
 // 8,902) are the well-known correct answer for standard chess — if our
 // count differs, rules.js has a bug in move generation or legality.
 
-import { createInitialState, getAllLegalMoves, applyMove } from '../src/rules.js';
+import { createInitialState, getAllLegalMoves, applyMove } from '../public/rules.js';
 
 function perft(state, depth) {
   if (depth === 0) return 1;
