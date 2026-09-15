@@ -107,7 +107,7 @@ of chess, cheese-themed, at a public URL — before the computer opponent or onl
   (checkmate/stalemate), you are always White, and the computer never takes over 2 seconds
   to respond.
 
-- [ ] **2.3 — Deploy Vs Computer update**
+- [x] **2.3 — Deploy Vs Computer update**
   Depends on: 2.2.
   Done when: the live URL offers Vs Computer as a mode choice and it works end to end.
 
