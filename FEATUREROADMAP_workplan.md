@@ -94,9 +94,9 @@ of chess, cheese-themed, at a public URL — before the computer opponent or onl
 
 ## Phase 2 — Vs Computer
 
-- [ ] **2.1 — Minimax + alpha-beta engine**
+- [x] **2.1 — Minimax + alpha-beta engine**
   Depends on: 0.4 (`rules.js`).
-  Files: `src/ai.js`.
+  Files: `public/ai.js` (moved from the planned `src/ai.js` — like rules.js, it must run in the browser).
   Done when: given any legal position, the engine returns a legal move, searching depth 2,
   within 2 seconds, verified against at least 10 varied test positions.
 
