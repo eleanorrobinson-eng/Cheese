@@ -53,7 +53,7 @@ of chess, cheese-themed, at a public URL — before the computer opponent or onl
   Done when: the start position renders with all 32 cheese-styled pieces, laid out to match
   the Figma `Cheese` file, on both desktop and mobile widths.
 
-- [ ] **1.2 — Click-to-move with legal-move highlighting**
+- [x] **1.2 — Click-to-move with legal-move highlighting**
   Depends on: 1.1.
   Files: `public/board.js` (reads `src/rules.js`).
   Done when: clicking a piece highlights only its legal destination squares (per `rules.js`),

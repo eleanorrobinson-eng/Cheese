@@ -190,6 +190,34 @@ body {
   background: var(--square-dark);
 }
 
+.square {
+  cursor: pointer;
+}
+
+.square.selected {
+  outline: 3px solid rgba(255, 255, 255, 0.85);
+  outline-offset: -3px;
+}
+
+.square.legal-move::after {
+  content: '';
+  position: absolute;
+  width: 28%;
+  height: 28%;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.28);
+  pointer-events: none;
+}
+
+.square.legal-capture::after {
+  content: '';
+  position: absolute;
+  inset: 8%;
+  border-radius: 50%;
+  border: 4px solid rgba(180, 30, 30, 0.65);
+  pointer-events: none;
+}
+
 .piece {
   font-size: clamp(28px, 6vw, 56px);
   line-height: 1;
