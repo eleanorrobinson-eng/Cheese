@@ -245,6 +245,39 @@ body {
   pointer-events: none;
 }
 
+.capture-fx {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.capture-fx .ghost-piece {
+  position: absolute;
+  animation: piece-nibbled 0.6s ease-in forwards;
+}
+
+.capture-fx .mouse-eater {
+  position: absolute;
+  font-size: clamp(20px, 4vw, 34px);
+  animation: mouse-run-in 0.6s ease-out forwards;
+}
+
+@keyframes piece-nibbled {
+  0% { opacity: 1; transform: scale(1) rotate(0deg); }
+  60% { opacity: 1; transform: scale(0.85) rotate(-8deg); }
+  100% { opacity: 0; transform: scale(0.3) rotate(20deg); }
+}
+
+@keyframes mouse-run-in {
+  0% { transform: translateX(-140%) scale(0.7); opacity: 0; }
+  35% { transform: translateX(0) scale(1.15); opacity: 1; }
+  65% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(0.9) translateX(20%); opacity: 0; }
+}
+
 .square.in-check {
   box-shadow: inset 0 0 0 4px rgba(220, 20, 20, 0.85);
   background: radial-gradient(circle, rgba(220, 20, 20, 0.55), transparent 70%);

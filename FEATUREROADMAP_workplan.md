@@ -78,7 +78,7 @@ of chess, cheese-themed, at a public URL — before the computer opponent or onl
   Done when: it's always visually obvious whose turn it is, and the board prompts players
   to hand off the device between turns.
 
-- [ ] **1.6 — Mouse-eats-piece capture animation**
+- [x] **1.6 — Mouse-eats-piece capture animation**
   Depends on: 1.2.
   Files: `public/board.js`, `public/styles.css`, mouse art assets.
   Done when: every one of the 16 capturable piece types on both sides triggers a mouse
