@@ -171,7 +171,7 @@ of chess, cheese-themed, at a public URL — before the computer opponent or onl
   Done when: a looping background ambience plays during a game without cutting out or
   restarting jarringly.
 
-- [ ] **4.3 — Mute control**
+- [x] **4.3 — Mute control**
   Depends on: 4.1, 4.2.
   Files: `public/sounds.js`, `public/styles.css`.
   Done when: a visible mute toggle silences all sound, persists for the session, and the

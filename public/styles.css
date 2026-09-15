@@ -362,6 +362,26 @@ body {
   text-shadow: 0 2px 0 rgba(0, 0, 0, 0.3);
 }
 
+.mute-toggle {
+  position: fixed;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  border: 3px solid var(--wall-dark);
+  background: var(--cheese);
+  font-size: 1.3rem;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  z-index: 20;
+}
+
+.mute-toggle:hover {
+  background: var(--pink);
+}
+
 /* Generic modal overlay (online join, and future dialogs) */
 
 .modal-overlay {
