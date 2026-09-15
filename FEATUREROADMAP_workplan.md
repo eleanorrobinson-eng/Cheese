@@ -84,7 +84,7 @@ of chess, cheese-themed, at a public URL — before the computer opponent or onl
   Done when: every one of the 16 capturable piece types on both sides triggers a mouse
   running in and eating the piece when captured, in a full test game.
 
-- [ ] **1.7 — Deploy hot-seat mode live**
+- [x] **1.7 — Deploy hot-seat mode live**
   Depends on: 1.1–1.6.
   Files: none new — `wrangler deploy`.
   Done when: a public URL lets two people play a complete, legal hot-seat game start to
