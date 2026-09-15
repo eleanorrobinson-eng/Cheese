@@ -11,6 +11,7 @@ import {
   fileOf,
   rankOf,
 } from './rules.js';
+import { playMoveSqueak, playCaptureSqueak } from './sounds.js';
 
 const PIECE_GLYPHS = {
   w: { k: '♔', q: '♕', r: '♖', b: '♗', n: '♘', p: '♙' },
@@ -239,7 +240,12 @@ function joinRoom(code) {
       }
       currentState = message.payload.state;
       clearSelection();
-      if (captureInfo) playCaptureAnimation(captureInfo.square, captureInfo.piece);
+      if (captureInfo) {
+        playCaptureAnimation(captureInfo.square, captureInfo.piece);
+        playCaptureSqueak();
+      } else if (lastMove) {
+        playMoveSqueak();
+      }
       return;
     }
 

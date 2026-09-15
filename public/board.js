@@ -9,6 +9,7 @@ import {
   rankOf,
 } from './rules.js';
 import { chooseMove } from './ai.js';
+import { playMoveSqueak, playCaptureSqueak } from './sounds.js';
 
 const AI_SEARCH_DEPTH = 2;
 const AI_THINK_DELAY_MS = 400;
@@ -173,7 +174,12 @@ function applyMoveAndAnimate(move) {
 
   state = applyMove(state, move);
   clearSelection();
-  if (captureInfo) playCaptureAnimation(captureInfo.square, captureInfo.piece);
+  if (captureInfo) {
+    playCaptureAnimation(captureInfo.square, captureInfo.piece);
+    playCaptureSqueak();
+  } else {
+    playMoveSqueak();
+  }
   return captureInfo;
 }
 

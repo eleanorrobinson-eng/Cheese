@@ -160,7 +160,7 @@ of chess, cheese-themed, at a public URL — before the computer opponent or onl
 
 ## Phase 4 — Optional extra (built last): sound
 
-- [ ] **4.1 — Mouse squeak sound effects**
+- [x] **4.1 — Mouse squeak sound effects**
   Depends on: 1.6 (capture animation to attach the sound to).
   Files: `public/sounds.js`, squeak audio assets.
   Done when: moves and captures trigger an appropriate squeak, in every mode.
