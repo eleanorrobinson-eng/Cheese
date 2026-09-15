@@ -92,10 +92,21 @@ export class Room extends DurableObject {
     } catch {
       return;
     }
-    if (data.type !== 'move') return;
 
     const attachment = ws.deserializeAttachment();
     const color = attachment?.color;
+
+    if (data.type === 'new-game') {
+      // Either player can reset the board for both; spectators cannot.
+      if (color !== 'w' && color !== 'b') return;
+      const fresh = createInitialState();
+      this.saveState(fresh);
+      this.broadcast({ type: 'state', payload: { state: fresh, lastMove: null } });
+      return;
+    }
+
+    if (data.type !== 'move') return;
+
     if (color !== 'w' && color !== 'b') {
       ws.send(JSON.stringify({ type: 'error', payload: { message: 'Spectators cannot move.' } }));
       return;

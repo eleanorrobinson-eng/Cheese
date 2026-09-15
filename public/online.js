@@ -212,6 +212,7 @@ function joinRoom(code) {
   roomCode = code;
   showOnlineScreen();
   setRoomInfo(`Connecting to room ${code}…`);
+  history.replaceState(null, '', `?room=${encodeURIComponent(code)}`);
 
   socket = new WebSocket(wsUrl(code));
 
@@ -270,3 +271,20 @@ document.getElementById('room-join-btn').addEventListener('click', () => {
   if (!code) return;
   joinRoom(code);
 });
+
+function requestNewGame() {
+  if (myColor !== 'w' && myColor !== 'b') return;
+  socket.send(JSON.stringify({ type: 'new-game' }));
+}
+
+document.getElementById('online-new-game-btn').addEventListener('click', requestNewGame);
+document.getElementById('online-new-game-btn-2').addEventListener('click', requestNewGame);
+
+// Refreshing mid-game should rejoin the same room automatically — the room
+// code lives in the URL (set on join) rather than only in memory.
+const roomFromUrl = new URLSearchParams(location.search).get('room');
+if (roomFromUrl) {
+  const input = document.getElementById('room-code-input');
+  input.value = roomFromUrl;
+  joinRoom(roomFromUrl);
+}

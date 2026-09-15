@@ -144,7 +144,7 @@ of chess, cheese-themed, at a public URL — before the computer opponent or onl
   page refresh and no polling — the server pushes a JSON message (`type`, `payload`) over the
   open WebSocket the instant the move is accepted.
 
-- [ ] **3.5 — Refresh-rejoin and "New game"**
+- [x] **3.5 — Refresh-rejoin and "New game"**
   Depends on: 3.4.
   Files: `src/room.js`, `public/online.js`.
   Done when: refreshing mid-game restores the exact position and your correct color (no
