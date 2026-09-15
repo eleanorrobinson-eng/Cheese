@@ -32,7 +32,7 @@ stands on.
   `not_found_handling: "single-page-application"`, today's `compatibility_date`, and
   observability turned on, so later tasks don't have to touch that config again.
 
-- [ ] **0.4 — Chess rules engine (`rules.js`) and the perft test**
+- [x] **0.4 — Chess rules engine (`rules.js`) and the perft test**
   Depends on: 0.3 (needs somewhere to run a script from), but not on any UI.
   Files: `src/rules.js`, `test/perft.js`.
   Done when: running the perft script from the start position prints exactly 20 (depth 1),
