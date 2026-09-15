@@ -115,7 +115,7 @@ of chess, cheese-themed, at a public URL — before the computer opponent or onl
 
 ## Phase 3 — Online rooms
 
-- [ ] **3.1 — Durable Object room scaffold**
+- [x] **3.1 — Durable Object room scaffold**
   Depends on: 0.3, 0.4.
   Files: `src/room.js` (the Durable Object class), `wrangler.jsonc` (add the
   `new_sqlite_classes` migration and the `ROOM` binding).
