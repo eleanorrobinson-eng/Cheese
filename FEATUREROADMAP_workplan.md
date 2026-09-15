@@ -60,7 +60,7 @@ of chess, cheese-themed, at a public URL — before the computer opponent or onl
   and clicking anywhere else is not possible as a move — an illegal move cannot be made
   through the UI.
 
-- [ ] **1.3 — Special moves: castling, en passant, promotion choice**
+- [x] **1.3 — Special moves: castling, en passant, promotion choice**
   Depends on: 1.2.
   Files: `public/board.js`.
   Done when: each of the three special moves is playable exactly when legal (and not

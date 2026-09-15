@@ -8,6 +8,28 @@ const PIECE_GLYPHS = {
 let state = null;
 let selectedSquare = null;
 let legalMoves = [];
+let awaitingPromotion = false;
+
+const promotionDialog = document.getElementById('promotion-dialog');
+const promotionChoicesEl = promotionDialog.querySelector('.promotion-choices');
+const PROMOTION_ORDER = ['q', 'r', 'b', 'n'];
+
+function askPromotionChoice(color) {
+  return new Promise((resolve) => {
+    promotionChoicesEl.innerHTML = '';
+    for (const type of PROMOTION_ORDER) {
+      const btn = document.createElement('button');
+      btn.className = `promotion-choice piece piece-${color}`;
+      btn.textContent = PIECE_GLYPHS[color][type];
+      btn.addEventListener('click', () => {
+        promotionDialog.hidden = true;
+        resolve(type);
+      });
+      promotionChoicesEl.appendChild(btn);
+    }
+    promotionDialog.hidden = false;
+  });
+}
 
 function render() {
   const container = document.getElementById('board');
@@ -57,7 +79,9 @@ function clearSelection() {
   render();
 }
 
-function handleSquareClick(square) {
+async function handleSquareClick(square) {
+  if (awaitingPromotion) return;
+
   const piece = state.board[square];
 
   if (selectedSquare === null) {
@@ -72,9 +96,15 @@ function handleSquareClick(square) {
 
   const candidates = legalMoves.filter((m) => m.to === square);
   if (candidates.length > 0) {
-    // Multiple candidates only happens on promotion (one per piece choice).
-    // The choice dialog is a later task — default to queen for now.
-    const move = candidates.length > 1 ? candidates.find((m) => m.promotion === 'q') : candidates[0];
+    let move = candidates[0];
+    if (candidates.length > 1) {
+      // Multiple candidates for the same destination only happens on promotion,
+      // one candidate per piece choice — ask which piece to become.
+      awaitingPromotion = true;
+      const choice = await askPromotionChoice(state.turn);
+      awaitingPromotion = false;
+      move = candidates.find((m) => m.promotion === choice);
+    }
     state = applyMove(state, move);
     clearSelection();
     return;
