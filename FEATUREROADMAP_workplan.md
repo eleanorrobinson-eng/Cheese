@@ -100,7 +100,7 @@ of chess, cheese-themed, at a public URL — before the computer opponent or onl
   Done when: given any legal position, the engine returns a legal move, searching depth 2,
   within 2 seconds, verified against at least 10 varied test positions.
 
-- [ ] **2.2 — Vs Computer mode**
+- [x] **2.2 — Vs Computer mode**
   Depends on: 1.1–1.6 (reuses the board UI), 2.1.
   Files: `public/vs-computer.js` (or a mode flag in `board.js`).
   Done when: a full game is playable against the computer from start to a legal end state

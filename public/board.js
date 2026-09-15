@@ -8,6 +8,10 @@ import {
   fileOf,
   rankOf,
 } from './rules.js';
+import { chooseMove } from './ai.js';
+
+const AI_SEARCH_DEPTH = 2;
+const AI_THINK_DELAY_MS = 400;
 
 const PIECE_GLYPHS = {
   w: { k: '♔', q: '♕', r: '♖', b: '♗', n: '♘', p: '♙' },
@@ -16,12 +20,14 @@ const PIECE_GLYPHS = {
 
 const COLOR_NAME = { w: 'White', b: 'Black' };
 
+let mode = 'hotseat';
 let state = null;
 let selectedSquare = null;
 let legalMoves = [];
 let awaitingPromotion = false;
 let gameOver = false;
 let pendingHandoff = false;
+let awaitingComputer = false;
 
 const gameOverBanner = document.getElementById('game-over-banner');
 const gameOverText = document.getElementById('game-over-text');
@@ -156,6 +162,28 @@ function playCaptureAnimation(square, piece) {
   setTimeout(() => fx.remove(), 650);
 }
 
+function applyMoveAndAnimate(move) {
+  let captureInfo = null;
+  if (move.capture) {
+    const capturedSquare = move.enPassantCapture
+      ? squareIndex(fileOf(move.to), rankOf(move.from))
+      : move.to;
+    captureInfo = { square: capturedSquare, piece: state.board[capturedSquare] };
+  }
+
+  state = applyMove(state, move);
+  clearSelection();
+  if (captureInfo) playCaptureAnimation(captureInfo.square, captureInfo.piece);
+  return captureInfo;
+}
+
+function makeComputerMove() {
+  const move = chooseMove(state, AI_SEARCH_DEPTH);
+  awaitingComputer = false;
+  if (!move) return;
+  applyMoveAndAnimate(move);
+}
+
 function selectSquare(square) {
   selectedSquare = square;
   legalMoves = getLegalMovesFrom(state, square);
@@ -169,7 +197,7 @@ function clearSelection() {
 }
 
 async function handleSquareClick(square) {
-  if (awaitingPromotion || gameOver || pendingHandoff) return;
+  if (awaitingPromotion || gameOver || pendingHandoff || awaitingComputer) return;
 
   const piece = state.board[square];
 
@@ -194,27 +222,22 @@ async function handleSquareClick(square) {
       awaitingPromotion = false;
       move = candidates.find((m) => m.promotion === choice);
     }
-    let captureInfo = null;
-    if (move.capture) {
-      const capturedSquare = move.enPassantCapture
-        ? squareIndex(fileOf(move.to), rankOf(move.from))
-        : move.to;
-      captureInfo = { square: capturedSquare, piece: state.board[capturedSquare] };
-    }
-
-    state = applyMove(state, move);
-    clearSelection();
-    if (captureInfo) playCaptureAnimation(captureInfo.square, captureInfo.piece);
+    const captureInfo = applyMoveAndAnimate(move);
 
     if (!gameOver) {
       const nextTurn = state.turn;
-      if (captureInfo) {
-        // Block input right away, but delay revealing the handoff prompt so
-        // the capture animation is actually visible before the device is passed.
-        pendingHandoff = true;
-        setTimeout(() => showHandoff(nextTurn), 650);
-      } else {
-        showHandoff(nextTurn);
+      if (mode === 'hotseat') {
+        if (captureInfo) {
+          // Block input right away, but delay revealing the handoff prompt so
+          // the capture animation is actually visible before the device is passed.
+          pendingHandoff = true;
+          setTimeout(() => showHandoff(nextTurn), 650);
+        } else {
+          showHandoff(nextTurn);
+        }
+      } else if (mode === 'vscomputer' && nextTurn === 'b') {
+        awaitingComputer = true;
+        setTimeout(makeComputerMove, captureInfo ? 650 + AI_THINK_DELAY_MS : AI_THINK_DELAY_MS);
       }
     }
     return;
@@ -228,15 +251,18 @@ async function handleSquareClick(square) {
   clearSelection();
 }
 
-function startHotSeat() {
+function startGame(newMode) {
+  mode = newMode;
   document.getElementById('home-screen').hidden = true;
   document.getElementById('game-screen').hidden = false;
   gameOverBanner.hidden = true;
   dismissHandoff();
+  awaitingComputer = false;
   state = createInitialState();
   clearSelection();
 }
 
-document.getElementById('mode-hotseat').addEventListener('click', startHotSeat);
-document.getElementById('play-again-btn').addEventListener('click', startHotSeat);
+document.getElementById('mode-hotseat').addEventListener('click', () => startGame('hotseat'));
+document.getElementById('mode-vscomputer').addEventListener('click', () => startGame('vscomputer'));
+document.getElementById('play-again-btn').addEventListener('click', () => startGame(mode));
 document.getElementById('handoff-ready-btn').addEventListener('click', dismissHandoff);
